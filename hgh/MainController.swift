@@ -111,7 +111,24 @@ class MainController: LBTAListHeaderController<PostCell, String, StoryHeader>, U
         
         collectionView.backgroundColor = .init(white: 0.9, alpha: 1)
         self.items = ["hello", "w9ro", "hello", "w9ro"]
+        setUpNavBar()
         
+    }
+    let logoImageView = UIImageView(image: UIImage(named: "sherwoodlogo"), contentMode: .scaleAspectFit)
+    
+    fileprivate func setUpNavBar() {
+        let width = view.frame.width - 120 - 16 - 60
+        let titleView = UIView(backgroundColor: .yellow)
+        titleView.frame = .init(x: 0, y: 0, width: width, height: 80)
+//        titleView.addSubview(logoImageView)
+       
+        
+        let searchButton = UIButton(title: "Search", titleColor: .black)
+        
+        titleView.hstack(logoImageView.withWidth(120), UIView(backgroundColor: .red).withWidth(width),searchButton.withWidth(60))
+        navigationItem.titleView = titleView
+        
+        //        navigationItem.title = "MY NAV BAR"
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: view.frame.width, height: 420)
@@ -132,7 +149,7 @@ struct MainPreview: PreviewProvider {
     }
     struct ContainerView: UIViewControllerRepresentable {
         func makeUIViewController(context: UIViewControllerRepresentableContext<MainPreview.ContainerView>) -> UIViewController {
-            return MainController()
+            return UINavigationController(rootViewController: MainController())
         }
         
         func updateUIViewController(_ uiViewController: MainPreview.ContainerView.UIViewControllerType, context: UIViewControllerRepresentableContext<MainPreview.ContainerView>) {
