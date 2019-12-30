@@ -32,13 +32,30 @@ class PostCell: LBTAListCell<String> {
 }
 //new 
 class StoryHeader: UICollectionReusableView {
+    
+    let storiesController = StoriesController(scrollDirection: .horizontal)
+    
     override init(frame: CGRect) {
-        super .init(frame: frame)
+        super.init(frame: frame)
         backgroundColor = .yellow
+        stack(storiesController.view) 
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
+    }
+}
+class StoryPhotoCell: LBTAListCell<String> {
+    
+    override func setupViews() {
+        backgroundColor = .red
+    }
+}
+class StoriesController: LBTAListController<StoryPhotoCell, String> {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.items = ["dog","house"]
+        
     }
 }
 //LBTAListHeaderController<PostCell, String, Header>
@@ -48,7 +65,9 @@ class MainController: LBTAListHeaderController<PostCell, String, StoryHeader>, U
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return .init(width: 0, height: 200)
     }
-    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return .init(top: 12, left: 0, bottom: 0, right: 0)
+    }
     
     
     override func viewDidLoad() {
