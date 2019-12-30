@@ -56,7 +56,7 @@ class StoryPhotoCell: LBTAListCell<String> {
     let titleLabel = UILabel(text: "New Construction", font: .boldSystemFont(ofSize: 14), textColor: .white, textAlignment: .center, numberOfLines: 1)
     override func setupViews() {
 //        backgroundColor = .red
-        imageView.layer.cornerRadius = 10
+        imageView.layer.cornerRadius = 20
         stack(imageView)
         
         
@@ -72,6 +72,8 @@ class StoryPhotoCell: LBTAListCell<String> {
     fileprivate func setupGradientLayer() {
         gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
         gradientLayer.locations = [0.7,1.2]
+        layer.cornerRadius = 20
+        layer.masksToBounds = true
         layer.addSublayer(gradientLayer)
     }
     override func layoutSubviews() {
