@@ -12,6 +12,8 @@ import LBTATools
 
 
 class PhotoGridCell: LBTAListCell<String> {
+    let photosGridController = PhotosGridController(scrollDirection:.horizontal)
+
     override var item: String! {
         didSet {
             imageView.image = UIImage(named: item)
@@ -29,9 +31,12 @@ class PhotoGridCell: LBTAListCell<String> {
     
 }
 class PhotosGridController: LBTAListController<PhotoGridCell, String>, UICollectionViewDelegateFlowLayout {
+    
     override func viewDidLoad() {
+        
         super .viewDidLoad()
         collectionView.backgroundColor = .lightGray
+//        PhotosGridController(layout: .init(), scrollDirection: .horizontal)
         self.items = ["dog","house","jamie","sweat","sb"]
         
     }

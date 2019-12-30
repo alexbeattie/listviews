@@ -46,16 +46,50 @@ class StoryHeader: UICollectionReusableView {
     }
 }
 class StoryPhotoCell: LBTAListCell<String> {
-    
+    override var item: String! {
+           didSet {
+               imageView.image = UIImage(named: item)
+                titleLabel.text = "New Construction"
+           }
+       }
+    let imageView = UIImageView(image: UIImage(named: "house"), contentMode: .scaleAspectFill)
+    let titleLabel = UILabel(text: "New Construction", font: .boldSystemFont(ofSize: 14), textColor: .white, textAlignment: .center, numberOfLines: 1)
     override func setupViews() {
-        backgroundColor = .red
+//        backgroundColor = .red
+        imageView.layer.cornerRadius = 10
+        stack(imageView)
+        
+        
+        setupGradientLayer()
+        
+        
+        
+        stack(UIView(),titleLabel).withMargins(.allSides(8))
+    }
+
+    let gradientLayer = CAGradientLayer()
+    
+    fileprivate func setupGradientLayer() {
+        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
+        gradientLayer.locations = [0.7,1.2]
+        layer.addSublayer(gradientLayer)
+    }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradientLayer.frame = bounds
     }
 }
-class StoriesController: LBTAListController<StoryPhotoCell, String> {
+class StoriesController: LBTAListController<StoryPhotoCell, String>, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return .init(width: 200, height: view.frame.height - 24)
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return .init(top: 0, left: 12, bottom: 0, right: 12)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.items = ["dog","house"]
-        
+        self.items = ["Willow","Camden","Fairhaven","Magnolia"]
+//        items.tex
     }
 }
 //LBTAListHeaderController<PostCell, String, Header>
@@ -78,7 +112,7 @@ class MainController: LBTAListHeaderController<PostCell, String, StoryHeader>, U
         
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: view.frame.width, height: 300)
+        return .init(width: view.frame.width, height: 420)
     }
 }
 
