@@ -34,6 +34,7 @@ class PostCell: LBTAListCell<String> {
 class StoryHeader: UICollectionReusableView {
     override init(frame: CGRect) {
         super .init(frame: frame)
+        backgroundColor = .yellow
     }
     
     required init?(coder: NSCoder) {
@@ -42,7 +43,14 @@ class StoryHeader: UICollectionReusableView {
 }
 //LBTAListHeaderController<PostCell, String, Header>
 
-class MainController: LBTAListController<PostCell, String>, UICollectionViewDelegateFlowLayout {
+class MainController: LBTAListHeaderController<PostCell, String, StoryHeader>, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return .init(width: 0, height: 200)
+    }
+    
+    
+    
     override func viewDidLoad() {
         super .viewDidLoad()
         
