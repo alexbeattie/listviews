@@ -115,23 +115,36 @@ class MainController: LBTAListHeaderController<PostCell, String, StoryHeader>, U
         
     }
     let logoImageView = UIImageView(image: UIImage(named: "sherwoodlogo"), contentMode: .scaleAspectFit)
-    
+    let searchButton = UIButton(title: "Search", titleColor: .black)
+
     fileprivate func setUpNavBar() {
         let width = view.frame.width - 120 - 16 - 60
-        let titleView = UIView(backgroundColor: .yellow)
+        let titleView = UIView(backgroundColor: .clear)
         titleView.frame = .init(x: 0, y: 0, width: width, height: 80)
 //        titleView.addSubview(logoImageView)
        
         
-        let searchButton = UIButton(title: "Search", titleColor: .black)
         
-        titleView.hstack(logoImageView.withWidth(120), UIView(backgroundColor: .red).withWidth(width),searchButton.withWidth(60))
+        titleView.hstack(logoImageView.withWidth(120), UIView(backgroundColor: .clear).withWidth(width),searchButton.withWidth(60))
         navigationItem.titleView = titleView
         
         //        navigationItem.title = "MY NAV BAR"
     }
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        let safeAreaTop = UIApplication.shared.windows.filter{$0.isKeyWindow}.first?.safeAreaInsets.top ?? 0
+        
+        let magicalSafeArea: CGFloat = 88
+        print(scrollView.contentOffset.y)
+        let offset = scrollView.contentOffset.y + magicalSafeArea
+        
+        let alpha:CGFloat = 1 - ((scrollView.contentOffset.y + magicalSafeArea) / magicalSafeArea)
+        [logoImageView, searchButton].forEach{$0.alpha = alpha}
+        logoImageView.alpha = alpha
+        navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0,-offset))
+    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: view.frame.width, height: 420)
+        return .init(width: view.frame.width, height: 410)
     }
 }
 
